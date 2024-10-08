@@ -112,7 +112,7 @@ source that one as the project's root importmap.
 <!-- Using attributes with chars unauthorized in Django templates -->
 {% importmap defer="true" "yes" as "data-is-cool" %}
 <!-- Attribute without value -->
-{% importmap defer="true" "yes" as "data-is-cool" %}
+{% importmap "defer" "yes" as "data-is-cool" %}
 ```
 
 **Note**: trying to specify an HTML attribute with no value as the first argument of `{% importmap %}` creates an
@@ -122,7 +122,7 @@ argument:
 
 ```django
 <!-- TemplateSyntaxError: ambiguity -->
-`{% importmap %}`
+`{% importmap "defer" %}`
 <!-- Ok -->
-{% importmap "--" defer %}
+{% importmap "--" "defer" %}
 ```

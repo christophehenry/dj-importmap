@@ -63,6 +63,7 @@ line-length = 100
 docstring-code-format = true
 
 [tool.ruff.lint.isort]
+force-sort-within-sections = true
 section-order = [
     "future",
     "standard-library",
