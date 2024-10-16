@@ -54,7 +54,7 @@ Changelog = "https://github.com/christophehenry/dj-importmap/blob/main/CHANGELOG
 version = { attr = "importmap.__version__" }
 
 [tool.setuptools.packages.find]
-include = ["importmap"]
+include = ["importmap*"]
 
 [tool.ruff]
 line-length = 100
