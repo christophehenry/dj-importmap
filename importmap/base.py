@@ -1,4 +1,5 @@
 from copy import copy
+from functools import wraps
 from typing import Mapping
 
 from django.templatetags.static import static
@@ -9,25 +10,29 @@ IMPORTMAP_MODULE_NAME = "importmaps"
 
 
 class ImportMaps(Mapping):
+    @staticmethod
+    def _lazy_loads(func):
+        @wraps(func)
+        def wrapper(self: "ImportMaps", *args, **kwargs):
+            if not self._is_populated:
+                self.reset()
+            return func(self, *args, **kwargs)
+
+        return wrapper
+
     def __init__(self):
         self._inner_reset()
 
+    @_lazy_loads
     def __getitem__(self, key, /):
-        if not self._is_populated:
-            self.reset()
-
         return self._cached[key]
 
+    @_lazy_loads
     def __len__(self):
-        if not self._is_populated:
-            self.reset()
-
         return len(self._cached)
 
+    @_lazy_loads
     def __iter__(self):
-        if not self._is_populated:
-            self.reset()
-
         return iter(self._cached)
 
     def reset(self):
@@ -62,6 +67,7 @@ class ImportMaps(Mapping):
 
         self._is_populated = True
 
+    @_lazy_loads
     def get_for_app(self, applabel):
         return self._per_app_cached[applabel]
 
