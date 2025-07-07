@@ -1,3 +1,10 @@
+# 0.0.3
+
+## Fixes
+
+- Dropped eager initialization of importmap on startup that could cause
+  conflict when running other commands than `runserver`
+
 # 0.0.2
 
 ## Fixes
