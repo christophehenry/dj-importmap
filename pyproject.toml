@@ -7,7 +7,7 @@ name = "dj-importmap"
 dynamic = ["version"]
 description = "Integrate HTML importmaps with Django for modern web development"
 readme = "README.md"
-license = { file = "LICENSE" }
+license-files = ["LICENSE"]
 
 authors = [
     { name = "Christophe Henry", email = "contact@c-henry.fr" }
@@ -21,7 +21,6 @@ classifiers = [
     "Framework :: Django :: 4.2",
     "Framework :: Django :: 5.0",
     "Framework :: Django :: 5.1",
-    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -37,18 +36,16 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "pre-commit",
-    "build",
-    "setuptools",
-    "twine",
+    "uv",
     "ruff",
 ]
 
 [project.urls]
-Homepage = "https://github.com/christophehenry/dj-importmap"
-Documentation = "https://github.com/christophehenry/dj-importmap/blob/main/README.md"
-Repository = "https://github.com/christophehenry/dj-importmap"
-Issues = "https://github.com/christophehenry/dj-importmap/issues"
-Changelog = "https://github.com/christophehenry/dj-importmap/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/betagouv/dj-importmap"
+Documentation = "https://github.com/betagouv/dj-importmap/blob/main/README.md"
+Repository = "https://github.com/betagouv/dj-importmap"
+Issues = "https://github.com/betagouv/dj-importmap/issues"
+Changelog = "https://github.com/betagouv/dj-importmap/blob/main/CHANGELOG.md"
 
 [tool.setuptools.dynamic]
 version = { attr = "importmap.__version__" }
