@@ -1,0 +1,38 @@
+name: Django application
+on: [push, pull_request]
+env:
+  SECRET_KEY: NOT_A_REAL_SECRET
+  DATABASE_URL: postgres://postgres:postgres@localhost/github_actions
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+        django-version: [">=4.2,<5", ">=5.0,<5.1", ">=5.1,<5.2", ">=5.2,<6"]
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: github_actions
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: pre-commit/action@v3.0.1
+      - uses: astral-sh/setup-uv@v7
+      - name: Install dependencies
+        run: |
+          uv venv
+          uv pip install 'django${{ matrix.django-version }}'
+          uv pip install .[dev]
+      - name: Run tests
+        run: uv run ./manage.py test
